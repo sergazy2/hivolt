@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HiVolt — строительство объектов электроснабжения</title>
+<meta name="description" content="ТОО «HiVolt» — строительство линий электропередачи и подстанций 0,4–220 кВ в Казахстане с 2008 года.">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#05435c; --navy-2:#0a5f7d; --ink:#0a2a38; --orange:#f39a0b; --orange-2:#ffc02e; --cyan:#05b3d3;
+  --bg:#f5f7f8; --line:#dfe5e8; --muted:#5d6f78; --white:#fff;
+  --r:14px; --fh:Montserrat,Inter,system-ui,sans-serif; --max:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.brand,.num{font-family:Montserrat,Inter,sans-serif}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+/* header */
+header{position:fixed;inset:0 0 auto;z-index:50;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:28px;height:68px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo img{height:40px;width:auto}
+.menu{display:flex;gap:24px;margin-left:auto;font-weight:500;font-size:15px}
+.menu a{color:var(--muted);transition:color .2s}
+.menu a:hover{color:var(--navy)}
+.langs{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+.langs button{border:0;background:none;font:600 13px Inter;padding:6px 11px;border-radius:999px;cursor:pointer;color:var(--muted)}
+.langs button.on{background:var(--navy);color:#fff}
+.burger{display:none;margin-left:auto;background:none;border:0;cursor:pointer;padding:8px}
+.burger span{display:block;width:24px;height:2px;background:var(--navy);margin:5px 0}
+
+/* hero */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;color:#fff;overflow:hidden;padding:120px 0 80px}
+.hero::before{content:"";position:absolute;inset:0;background:url(img/hero.jpg) center/cover no-repeat;transform:scale(1.03)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(4,38,54,.95) 0%,rgba(4,48,68,.82) 45%,rgba(5,67,92,.3) 100%)}
+.hero .wrap{position:relative;z-index:1;width:100%}
+.tag{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--orange-2)}
+.tag::before{content:"";width:28px;height:2px;background:var(--orange)}
+.hero h1{font-size:clamp(34px,5.2vw,64px);line-height:1.08;font-weight:800;margin:18px 0 20px;max-width:820px}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--orange-2),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:clamp(16px,1.6vw,19px);max-width:600px;color:#d5e0e5}
+.volts{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 36px}
+.volts i{font-style:normal}
+.volts span{border:1px solid rgba(255,255,255,.28);border-radius:8px;padding:7px 14px;font:700 15px var(--fh);background:rgba(255,255,255,.06)}
+.btns{display:flex;flex-wrap:wrap;gap:14px}
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:600;padding:15px 26px;border-radius:10px;transition:transform .15s,background .2s;font-size:15px}
+.btn:hover{transform:translateY(-2px)}
+.btn-o{background:var(--orange);color:#fff}
+.btn-o:hover{background:var(--orange-2)}
+.btn-g{border:1px solid rgba(255,255,255,.4);color:#fff}
+.btn-g:hover{background:rgba(255,255,255,.1)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.14);border-radius:var(--r);overflow:hidden;margin-top:64px;max-width:900px}
+.stats>div{background:rgba(4,38,54,.72);padding:22px 24px}
+.num{font-size:clamp(28px,3.4vw,40px);font-weight:800;color:#fff;line-height:1}
+.num small{color:var(--orange);font-size:.7em}
+.stats p{color:#b7c7ce;font-size:14px;margin-top:6px}
+
+/* sections */
+section{padding:100px 0}
+.alt{background:var(--bg)}
+.head{max-width:720px;margin-bottom:48px}
+.head h2{font-size:clamp(28px,3.4vw,42px);line-height:1.15;font-weight:800;margin:12px 0 14px;color:var(--navy)}
+.head p{color:var(--muted);font-size:17px}
+.tag.dark{color:var(--orange)}
+
+/* about */
+.about{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+.about-img{position:relative}
+.about-img img{border-radius:var(--r);aspect-ratio:4/3;object-fit:cover;width:100%}
+.about-img .badge{position:absolute;right:-18px;bottom:-24px;background:var(--orange);color:#fff;border-radius:var(--r);padding:20px 24px;box-shadow:0 18px 40px rgba(243,154,11,.35)}
+.badge .num{color:#fff}
+.badge p{font-size:13px;font-weight:600;opacity:.95}
+.about ul{list-style:none;margin-top:26px;display:grid;gap:14px}
+.about li{display:flex;gap:14px;align-items:flex-start}
+.about li b{display:block;color:var(--navy)}
+.about li span{color:var(--muted);font-size:15px}
+.ico{flex:none;width:40px;height:40px;border-radius:10px;background:#e3f5f9;color:var(--navy-2);display:grid;place-items:center}
+.ico svg{width:22px;height:22px}
+
+/* services */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:28px 24px;transition:border-color .2s,transform .2s,box-shadow .2s}
+.card:hover{border-color:var(--orange);transform:translateY(-4px);box-shadow:0 16px 36px rgba(20,48,61,.08)}
+.card .ico{width:52px;height:52px;margin-bottom:18px;background:linear-gradient(135deg,var(--cyan),var(--navy));color:#fff}
+.card .ico svg{width:26px;height:26px}
+.card h3{font-size:18px;color:var(--navy);margin-bottom:8px;line-height:1.3}
+.card p{color:var(--muted);font-size:15px}
+
+/* production */
+.prod{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.prod-box{background:var(--navy);color:#fff;border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.prod-pics{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;height:200px}
+.prod-pics img{width:100%;height:200px;min-height:0;object-fit:cover}
+.prod-body{padding:30px}
+.prod-body h3{font-size:22px;margin-bottom:16px}
+.prod-body ul{list-style:none;display:grid;gap:10px}
+.prod-body li{padding-left:22px;position:relative;color:#d2dde2}
+.prod-body li::before{content:"";position:absolute;left:0;top:9px;width:9px;height:9px;background:var(--orange);transform:rotate(45deg)}
+
+/* projects */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.filters button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 16px;font:600 14px Inter;color:var(--muted);cursor:pointer}
+.filters button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.plist{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.proj{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px 24px;display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:start}
+.proj .yr{grid-row:span 2;font:800 15px var(--fh);color:var(--navy);background:var(--bg);border-radius:8px;padding:8px 10px;text-align:center;min-width:92px}
+.proj .yr.live{background:#fff4dc;color:#c27400}
+.proj h3{font:600 16px/1.4 Inter;color:var(--ink)}
+.proj p{font-size:14px;color:var(--muted)}
+.more{margin-top:26px;color:var(--muted);font-size:15px}
+.more b{color:var(--navy)}
+
+/* gallery */
+.gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:12px;grid-auto-flow:dense}
+.gal button{border:0;padding:0;border-radius:12px;overflow:hidden;cursor:zoom-in;background:#ccd}
+.gal img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.gal button:hover img{transform:scale(1.06)}
+.gal .w2{grid-column:span 2}
+.gal .h2{grid-row:span 2}
+
+/* docs */
+.docs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px}
+.docs button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px;cursor:zoom-in;transition:box-shadow .2s,border-color .2s}
+.docs button:hover{border-color:var(--orange);box-shadow:0 10px 26px rgba(20,48,61,.1)}
+.docs img{aspect-ratio:3/4;object-fit:cover;object-position:top;width:100%;border-radius:4px}
+.docs span{display:block;font-size:13px;font-weight:600;color:var(--navy);margin-top:8px;text-align:left}
+
+/* contacts */
+.contact{background:linear-gradient(135deg,#04324a,var(--navy));color:#fff;position:relative;overflow:hidden}
+.contact::before{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border:60px solid rgba(255,192,46,.08);border-radius:50%}
+.contact .head h2{color:#fff}
+.contact .head p{color:#b7c7ce}
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;position:relative}
+.cbox{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;gap:10px}
+.cbox .ico{background:var(--orange);color:#fff;width:48px;height:48px}
+.cbox small{color:#9fb3bb;font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:12px;margin-top:6px}
+.cbox .val{font:700 19px/1.35 var(--fh);word-break:break-word}
+.cbox .links{display:flex;gap:14px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.cbox .links a{color:var(--orange-2);font-weight:600;font-size:14px}
+.cbox .links a:hover{text-decoration:underline}
+
+footer{background:#03283a;color:#8aa0a9;font-size:14px;padding:26px 0}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px 28px;flex-wrap:wrap}
+
+/* lightbox */
+.lb{position:fixed;inset:0;background:rgba(5,14,19,.94);z-index:100;display:none;align-items:center;justify-content:center;padding:40px}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:100%;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lb button{position:absolute;background:rgba(255,255,255,.1);border:0;color:#fff;width:48px;height:48px;border-radius:50%;font-size:24px;cursor:pointer}
+.lb button:hover{background:var(--orange)}
+.lb .x{top:18px;right:18px}.lb .pv{left:18px;top:50%;transform:translateY(-50%)}.lb .nx{right:18px;top:50%;transform:translateY(-50%)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:1000px){
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .about,.prod{grid-template-columns:1fr}
+  .about-img .badge{right:16px}
+  .plist{grid-template-columns:1fr}
+  .gal{grid-template-columns:repeat(2,1fr);grid-auto-rows:180px}
+  .cgrid{grid-template-columns:1fr}
+}
+@media (max-width:820px){
+  .menu{display:none;position:absolute;top:68px;left:0;right:0;background:#fff;flex-direction:column;padding:16px 24px 22px;gap:14px;border-bottom:1px solid var(--line);margin:0}
+  .menu.open{display:flex}
+  .burger{display:block}
+  .langs{margin-left:0}
+  .nav{gap:12px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  section{padding:72px 0}
+}
+@media (max-width:520px){
+  .cards{grid-template-columns:1fr}
+  .logo img{height:28px}
+  .langs button{padding:6px 8px}
+  .gal .w2{grid-column:span 2}
+  .proj{grid-template-columns:1fr}
+  .proj .yr{grid-row:auto;justify-self:start}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="logo" aria-label="HiVolt"><img src="img/logo.png" alt="HiVolt"></a>
+    <nav class="menu" id="menu">
+      <a href="#about" data-i="nav_about"></a>
+      <a href="#services" data-i="nav_services"></a>
+      <a href="#production" data-i="nav_prod"></a>
+      <a href="#projects" data-i="nav_projects"></a>
+      <a href="#docs" data-i="nav_docs"></a>
+      <a href="#contacts" data-i="nav_contacts"></a>
+    </nav>
+    <div class="langs" role="group" aria-label="Language">
+      <button data-l="kk">ҚАЗ</button><button data-l="ru">РУС</button><button data-l="en">ENG</button>
+    </div>
+    <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <span class="tag" data-i="hero_tag"></span>
+    <h1 data-i="hero_h"></h1>
+    <p class="lead" data-i="hero_p"></p>
+    <div class="volts"><span>220 <i data-i="kv">кВ</i></span><span>110 <i data-i="kv">кВ</i></span><span>35 <i data-i="kv">кВ</i></span><span>10/0,4 <i data-i="kv">кВ</i></span></div>
+    <div class="btns">
+      <a class="btn btn-o" href="#contacts" data-i="hero_btn1"></a>
+      <a class="btn btn-g" href="#projects" data-i="hero_btn2"></a>
+    </div>
+    <div class="stats">
+      <div><div class="num"><span class="yrs">18</span><small>+</small></div><p data-i="st_years"></p></div>
+      <div><div class="num">50<small>+</small></div><p data-i="st_staff"></p></div>
+      <div><div class="num">34<small>+</small></div><p data-i="st_proj"></p></div>
+      <div><div class="num">2008</div><p data-i="st_found"></p></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about">
+    <div class="about-img reveal">
+      <img src="img/sub1.jpg" alt="">
+      <div class="badge"><div class="num"><span class="yrs">18</span> <span data-i="badge_y"></span></div><p data-i="badge_p"></p></div>
+    </div>
+    <div class="reveal">
+      <span class="tag dark" data-i="ab_tag"></span>
+      <div class="head" style="margin-bottom:0">
+        <h2 data-i="ab_h"></h2>
+        <p data-i="ab_p"></p>
+      </div>
+      <ul>
+        <li><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div><div><b data-i="ab_l1"></b><span data-i="ab_l1d"></span></div></li>
+        <li><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6"/><path d="M17 11a3 3 0 100-6M22 21c0-3-2-5-5-5.5"/></svg></div><div><b data-i="ab_l2"></b><span data-i="ab_l2d"></span></div></li>
+        <li><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V10l7-6 7 6v11"/><path d="M9 21v-6h6v6"/></svg></div><div><b data-i="ab_l3"></b><span data-i="ab_l3d"></span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="services">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="tag dark" data-i="sv_tag"></span>
+      <h2 data-i="sv_h"></h2>
+      <p data-i="sv_p"></p>
+    </div>
+    <div class="cards">
+      <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L7 22M12 2l5 20M8 8h8M6.5 14h11M5 22h14"/></svg></div><h3 data-i="s1"></h3><p data-i="s1d"></p></div>
+      <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V3M16 7V3M13 10l-3 5h4l-3 5"/></svg></div><h3 data-i="s2"></h3><p data-i="s2d"></p></div>
+      <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg></div><h3 data-i="s3"></h3><p data-i="s3d"></p></div>
+      <div class="card reveal"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></div><h3 data-i="s4"></h3><p data-i="s4d"></p></div>
+    </div>
+  </div>
+</section>
+
+<section id="production">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="tag dark" data-i="pr_tag"></span>
+      <h2 data-i="pr_h"></h2>
+      <p data-i="pr_p"></p>
+    </div>
+    <div class="prod">
+      <div class="prod-box reveal">
+        <div class="prod-pics"><img src="img/p1.jpg" alt=""><img src="img/p2.jpg" alt=""><img src="img/p3.jpg" alt=""></div>
+        <div class="prod-body"><h3 data-i="pr1"></h3><ul data-list="pr1l"></ul></div>
+      </div>
+      <div class="prod-box reveal">
+        <div class="prod-pics"><img src="img/p4.jpg" alt=""><img src="img/p6.jpg" alt=""><img src="img/p5.jpg" alt=""></div>
+        <div class="prod-body"><h3 data-i="pr2"></h3><ul data-list="pr2l"></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="projects">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="tag dark" data-i="pj_tag"></span>
+      <h2 data-i="pj_h"></h2>
+      <p data-i="pj_p"></p>
+    </div>
+    <div class="filters" id="filters">
+      <button data-f="all" class="on" data-i="f_all"></button>
+      <button data-f="live" data-i="f_live"></button>
+      <button data-f="sub" data-i="f_sub"></button>
+      <button data-f="net" data-i="f_net"></button>
+    </div>
+    <div class="plist" id="plist"></div>
+    <p class="more" data-i="pj_more"></p>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="tag dark" data-i="gl_tag"></span>
+      <h2 data-i="gl_h"></h2>
+    </div>
+    <div class="gal" id="gal"></div>
+  </div>
+</section>
+
+<section class="alt" id="docs">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="tag dark" data-i="dc_tag"></span>
+      <h2 data-i="dc_h"></h2>
+      <p data-i="dc_p"></p>
+    </div>
+    <div class="docs" id="docsgrid"></div>
+  </div>
+</section>
+
+<section class="contact" id="contacts">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="tag" data-i="ct_tag"></span>
+      <h2 data-i="ct_h"></h2>
+      <p data-i="ct_p"></p>
+    </div>
+    <div class="cgrid">
+      <div class="cbox reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 10-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+        <small data-i="ct_addr"></small>
+        <div class="val" data-i="addr"></div>
+        <div class="links">
+          <a href="https://2gis.kz/astana/search/%D0%A8%D0%B0%D1%80%D0%BB%D1%8C%20%D0%B4%D0%B5%20%D0%93%D0%BE%D0%BB%D0%BB%D1%8C%201%D0%90" target="_blank" rel="noopener">2GIS ↗</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=Astana%2C+Charles+de+Gaulle+1A" target="_blank" rel="noopener">Google Maps ↗</a>
+        </div>
+      </div>
+      <div class="cbox reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3.1 19.5 19.5 0 01-6-6A19.8 19.8 0 012.1 4.2 2 2 0 014.1 2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L8 9.9a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/></svg></div>
+        <small data-i="ct_phone"></small>
+        <div class="val">+7 777 880 78 07</div>
+        <div class="links">
+          <a href="tel:+77778807807" data-i="call"></a>
+          <a href="https://wa.me/77778807807" target="_blank" rel="noopener">WhatsApp ↗</a>
+        </div>
+      </div>
+      <div class="cbox reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg></div>
+        <small>E-mail</small>
+        <div class="val">hivolt1606@gmail.com</div>
+        <div class="links">
+          <a href="mailto:hivolt1606@gmail.com" data-i="write"></a>
+          <a href="#" id="copymail" data-i="copy"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <img src="img/logo-white.png" alt="HiVolt" style="height:26px;width:auto">
+    <span>© <span id="yr">2026</span> <span data-i="ft_name"></span></span>
+    <span data-i="ft_r"></span>
+  </div>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true">
+  <button class="x" aria-label="Close">×</button>
+  <button class="pv" aria-label="Previous">‹</button>
+  <img id="lbimg" alt="">
+  <button class="nx" aria-label="Next">›</button>
+</div>
+
+<script>
+const T={
+ru:{
+kv:"кВ",nav_about:"О компании",nav_services:"Услуги",nav_prod:"Производство",nav_projects:"Проекты",nav_docs:"Лицензии",nav_contacts:"Контакты",
+hero_tag:"ТОО «HiVolt» · с 2008 года",
+hero_h:"Строим объекты <em>электроснабжения</em> по всему Казахстану",
+hero_p:"Линии электропередачи и подстанции напряжением до 220 кВ — от проекта и собственного производства конструкций до ввода в эксплуатацию.",
+hero_btn1:"Связаться с нами",hero_btn2:"Наши проекты",
+st_years:"лет на рынке",st_staff:"специалистов",st_proj:"завершённых проектов",st_found:"год основания",
+badge_y:"лет",badge_p:"надёжной работы в энергетике",
+ab_tag:"О компании",
+ab_h:"Надёжный партнёр в энергетике Казахстана",
+ab_p:"ТОО «HiVolt» основано 5 августа 2008 года. Мы строим линии электропередачи и подстанции классом напряжения 220, 110, 35 и 10/0,4 кВ для государственных заказчиков, энергосетевых и промышленных компаний.",
+ab_l1:"Государственная лицензия",ab_l1d:"Все виды работ выполняются по действующей лицензии и сертифицированным стандартам.",
+ab_l2:"Около 50 специалистов",ab_l2d:"Инженеры, электромонтажники и линейные бригады с опытом работы на объектах до 220 кВ.",
+ab_l3:"Собственное производство",ab_l3d:"Железобетонные изделия, КТПН, щиты и металлоконструкции — контроль качества и сроков на каждом этапе.",
+sv_tag:"Услуги",sv_h:"Что мы делаем",sv_p:"Выполняем полный цикл строительно-монтажных работ на объектах электроснабжения.",
+s1:"Линии электропередачи",s1d:"Строительство и реконструкция ВЛ и КЛ 0,4–220 кВ, в том числе с применением СИП.",
+s2:"Подстанции",s2d:"Строительство ПС 35–220 кВ, трансформаторных подстанций ТП и КТП 10/0,4 кВ.",
+s3:"Монтаж оборудования",s3d:"Монтаж и замена силового оборудования подстанций, ремонт трансформаторов.",
+s4:"Внешнее электроснабжение",s4d:"Электроснабжение жилых массивов, промышленных зон, месторождений и инженерной инфраструктуры.",
+pr_tag:"Производство",pr_h:"Собственная производственная база",pr_p:"Выпускаем изделия для своих объектов и для заказчиков.",
+pr1:"Железобетонные изделия",pr1l:["Опоры ЛЭП СВ-95, СВ-105, СВ-110","Арычные лотки и лотки для кабеля","Плиты перекрытия","Железобетонные кольца","Фундаментные блоки ФБС"],
+pr2:"Электрооборудование",pr2l:["Комплектные трансформаторные подстанции КТПН всех типов","Электрические щиты со степенью защиты IP54","Металлоконструкции для ЛЭП"],
+pj_tag:"Проекты",pj_h:"Ключевые объекты",pj_p:"Выборка из реализованных и текущих проектов компании.",
+f_all:"Все",f_live:"В работе",f_sub:"Подстанции",f_net:"Сети и ЛЭП",live:"в работе",
+pj_more:"Всего за время работы компания выполнила <b>более 34 проектов</b> в Туркестанской, Актюбинской, Западно-Казахстанской, Жамбылской областях, в Шымкенте, Алматы и Астане.",
+gl_tag:"Фотогалерея",gl_h:"Наши объекты",
+dc_tag:"Документы",dc_h:"Лицензия и сертификаты",dc_p:"Подтверждённое качество и профессиональный стандарт. Нажмите, чтобы увеличить.",
+lic:"Лицензия",cert:"Сертификат",
+ct_tag:"Контакты",ct_h:"Обсудим ваш проект",ct_p:"Позвоните, напишите в WhatsApp или на почту — ответим в течение рабочего дня.",
+ct_addr:"Адрес офиса",addr:"г. Астана, ул. Шарль де Голль, 1А, офис 502",ct_phone:"Телефон",call:"Позвонить",write:"Написать",copy:"Скопировать",copied:"Скопировано ✓",
+ft_name:"ТОО «HiVolt». Все права защищены.",ft_r:"Строительство объектов электроснабжения · Казахстан",
+title:"HiVolt — строительство объектов электроснабжения"
+},
+kk:{
+kv:"кВ",nav_about:"Компания туралы",nav_services:"Қызметтер",nav_prod:"Өндіріс",nav_projects:"Жобалар",nav_docs:"Лицензиялар",nav_contacts:"Байланыс",
+hero_tag:"«HiVolt» ЖШС · 2008 жылдан бері",
+hero_h:"Қазақстан бойынша <em>электрмен жабдықтау</em> нысандарын саламыз",
+hero_p:"220 кВ-қа дейінгі электр беру желілері мен қосалқы станциялар — жобадан және конструкцияларды өз өндірісімізде жасаудан бастап пайдалануға бергенге дейін.",
+hero_btn1:"Бізбен байланысу",hero_btn2:"Біздің жобалар",
+st_years:"жыл нарықта",st_staff:"маман",st_proj:"аяқталған жоба",st_found:"құрылған жылы",
+badge_y:"жыл",badge_p:"энергетикадағы сенімді жұмыс",
+ab_tag:"Компания туралы",
+ab_h:"Қазақстан энергетикасындағы сенімді серіктес",
+ab_p:"«HiVolt» ЖШС 2008 жылғы 5 тамызда құрылған. Біз мемлекеттік тапсырыс берушілер, электр желілік және өнеркәсіптік компаниялар үшін 220, 110, 35 және 10/0,4 кВ кернеу класындағы электр беру желілері мен қосалқы станцияларды саламыз.",
+ab_l1:"Мемлекеттік лицензия",ab_l1d:"Барлық жұмыс түрлері қолданыстағы лицензия мен сертификатталған стандарттар бойынша орындалады.",
+ab_l2:"50-ге жуық маман",ab_l2d:"220 кВ-қа дейінгі нысандарда тәжірибесі бар инженерлер, электр монтаждаушылар және желілік бригадалар.",
+ab_l3:"Меншікті өндіріс",ab_l3d:"Темірбетон бұйымдары, КТПН, қалқандар және металл конструкциялар — әр кезеңде сапа мен мерзімді бақылау.",
+sv_tag:"Қызметтер",sv_h:"Біз не істейміз",sv_p:"Электрмен жабдықтау нысандарында құрылыс-монтаж жұмыстарының толық циклін орындаймыз.",
+s1:"Электр беру желілері",s1d:"0,4–220 кВ ӘЖ және КЖ салу және қайта жаңарту, соның ішінде ӨОС қолдану арқылы.",
+s2:"Қосалқы станциялар",s2d:"35–220 кВ ҚС, 10/0,4 кВ ТП және КТП трансформаторлық қосалқы станцияларын салу.",
+s3:"Жабдықтарды монтаждау",s3d:"Қосалқы станциялардың күштік жабдықтарын монтаждау және ауыстыру, трансформаторларды жөндеу.",
+s4:"Сыртқы электрмен жабдықтау",s4d:"Тұрғын алаптарды, өнеркәсіптік аймақтарды, кен орындарын және инженерлік инфрақұрылымды электрмен жабдықтау.",
+pr_tag:"Өндіріс",pr_h:"Меншікті өндірістік база",pr_p:"Өз нысандарымыз бен тапсырыс берушілер үшін бұйымдар шығарамыз.",
+pr1:"Темірбетон бұйымдары",pr1l:["ЭБЖ тіректері СВ-95, СВ-105, СВ-110","Арық науалары және кабельге арналған науалар","Жабын плиталары","Темірбетон сақиналар","ФБС іргетас блоктары"],
+pr2:"Электр жабдықтары",pr2l:["Барлық типтегі КТПН жинақты трансформаторлық қосалқы станциялары","IP54 қорғау дәрежесі бар электр қалқандары","ЭБЖ-ға арналған металл конструкциялар"],
+pj_tag:"Жобалар",pj_h:"Негізгі нысандар",pj_p:"Компанияның іске асырылған және ағымдағы жобаларынан іріктеме.",
+f_all:"Барлығы",f_live:"Орындалуда",f_sub:"Қосалқы станциялар",f_net:"Желілер мен ЭБЖ",live:"орындалуда",
+pj_more:"Жұмыс барысында компания Түркістан, Ақтөбе, Батыс Қазақстан, Жамбыл облыстарында, Шымкентте, Алматыда және Астанада <b>34-тен астам жобаны</b> орындады.",
+gl_tag:"Фотогалерея",gl_h:"Біздің нысандар",
+dc_tag:"Құжаттар",dc_h:"Лицензия және сертификаттар",dc_p:"Расталған сапа және кәсіби стандарт. Үлкейту үшін басыңыз.",
+lic:"Лицензия",cert:"Сертификат",
+ct_tag:"Байланыс",ct_h:"Жобаңызды талқылайық",ct_p:"Қоңырау шалыңыз, WhatsApp-қа немесе поштаға жазыңыз — жұмыс күні ішінде жауап береміз.",
+ct_addr:"Кеңсе мекенжайы",addr:"Астана қ., Шарль де Голль к-сі, 1А, 502-кеңсе",ct_phone:"Телефон",call:"Қоңырау шалу",write:"Жазу",copy:"Көшіру",copied:"Көшірілді ✓",
+ft_name:"«HiVolt» ЖШС. Барлық құқықтар қорғалған.",ft_r:"Электрмен жабдықтау нысандарының құрылысы · Қазақстан",
+title:"HiVolt — электрмен жабдықтау нысандарының құрылысы"
+},
+en:{
+kv:"kV",nav_about:"About",nav_services:"Services",nav_prod:"Manufacturing",nav_projects:"Projects",nav_docs:"Licenses",nav_contacts:"Contacts",
+hero_tag:"HiVolt LLP · since 2008",
+hero_h:"Building <em>power supply</em> infrastructure across Kazakhstan",
+hero_p:"Power transmission lines and substations up to 220 kV — from design and in-house manufacturing of structures to commissioning.",
+hero_btn1:"Contact us",hero_btn2:"Our projects",
+st_years:"years in business",st_staff:"specialists",st_proj:"completed projects",st_found:"year founded",
+badge_y:"years",badge_p:"of reliable work in the power sector",
+ab_tag:"About us",
+ab_h:"A reliable partner in Kazakhstan's power sector",
+ab_p:"HiVolt LLP was founded on 5 August 2008. We build power lines and substations rated 220, 110, 35 and 10/0.4 kV for public-sector clients, grid operators and industrial companies.",
+ab_l1:"State license",ab_l1d:"All work is carried out under a valid state license and certified standards.",
+ab_l2:"About 50 specialists",ab_l2d:"Engineers, electricians and line crews experienced on facilities up to 220 kV.",
+ab_l3:"In-house manufacturing",ab_l3d:"Precast concrete, package substations, switchboards and steel structures — quality and schedule under control at every stage.",
+sv_tag:"Services",sv_h:"What we do",sv_p:"We deliver the full cycle of construction and installation works for power supply facilities.",
+s1:"Power transmission lines",s1d:"Construction and upgrade of 0.4–220 kV overhead and cable lines, including self-supporting insulated wire (SIP).",
+s2:"Substations",s2d:"Construction of 35–220 kV substations and 10/0.4 kV transformer and package substations.",
+s3:"Equipment installation",s3d:"Installation and replacement of substation power equipment, transformer repair.",
+s4:"External power supply",s4d:"Power supply for residential districts, industrial zones, mining fields and utility infrastructure.",
+pr_tag:"Manufacturing",pr_h:"Our own production base",pr_p:"We manufacture products for our own sites and for clients.",
+pr1:"Precast concrete products",pr1l:["Power line poles SV-95, SV-105, SV-110","Irrigation and cable trays","Floor slabs","Concrete rings","FBS foundation blocks"],
+pr2:"Electrical equipment",pr2l:["Package transformer substations (KTPN) of all types","IP54-rated electrical switchboards","Steel structures for power lines"],
+pj_tag:"Projects",pj_h:"Key projects",pj_p:"A selection of the company's completed and ongoing projects.",
+f_all:"All",f_live:"Ongoing",f_sub:"Substations",f_net:"Grids & lines",live:"ongoing",
+pj_more:"Over the years the company has delivered <b>more than 34 projects</b> in Turkistan, Aktobe, West Kazakhstan and Zhambyl regions, as well as in Shymkent, Almaty and Astana.",
+gl_tag:"Gallery",gl_h:"Our sites",
+dc_tag:"Documents",dc_h:"License and certificates",dc_p:"Proven quality and professional standards. Click to enlarge.",
+lic:"License",cert:"Certificate",
+ct_tag:"Contacts",ct_h:"Let's discuss your project",ct_p:"Call us, message us on WhatsApp or send an email — we reply within one business day.",
+ct_addr:"Office address",addr:"1A Charles de Gaulle St., Office 502, Astana",ct_phone:"Phone",call:"Call",write:"Write",copy:"Copy",copied:"Copied ✓",
+ft_name:"HiVolt LLP. All rights reserved.",ft_r:"Power supply construction · Kazakhstan",
+title:"HiVolt — power supply construction"
+}};
+
+const P=[
+{y:"2025",live:1,c:"sub",ru:["Внешнее электроснабжение Инновационного комплекса Састобе 180 МВт — реконструкция ПС «Сас-Тобе» 220 кВ с ВЛ 220 кВ","ТОО «Инновационный комплекс Састобе»"],kk:["Састөбе 180 МВт инновациялық кешенін сыртқы электрмен жабдықтау — 220 кВ ӘЖ бар 220 кВ «Сас-Төбе» ҚС қайта жаңарту","«Састөбе инновациялық кешені» ЖШС"],en:["External power supply for the 180 MW Sastobe Innovation Complex — upgrade of the 220 kV Sas-Tobe substation with 220 kV overhead line","Sastobe Innovation Complex LLP"]},
+{y:"2025",live:1,c:"net",ru:["Внешнее электроснабжение участка №2 «Торткудук» месторождения Моинкум","ТОО «КАТКО» (Казахстанско-французское СП)"],kk:["Мойынқұм кен орнының №2 «Төртқұдық» учаскесін сыртқы электрмен жабдықтау","«КАТКО» ЖШС (қазақстан-француз БК)"],en:["External power supply for Tortkuduk site No. 2, Moinkum deposit","KATCO LLP (Kazakh-French JV)"]},
+{y:"2025",live:1,c:"sub",ru:["Демонтаж и новое строительство ТП 10/0,4 кВ, г. Астана","АО «Астана-РЭК»"],kk:["10/0,4 кВ ТП бөлшектеу және жаңадан салу, Астана қ.","«Астана-РЭК» АҚ"],en:["Dismantling and new construction of 10/0.4 kV transformer substations, Astana","Astana-REK JSC"]},
+{y:"2025",live:1,c:"sub",ru:["Шардаринский групповой водопровод (2-я очередь), ПС 35/6/0,4 кВ «Тама»","ТОО «Алтын Констракшн»"],kk:["Шардара топтық су құбыры (2-кезек), 35/6/0,4 кВ «Тама» ҚС","«Алтын Констракшн» ЖШС"],en:["Shardara group water pipeline (phase 2), 35/6/0.4 kV Tama substation","Altyn Construction LLP"]},
+{y:"2024–2025",c:"net",ru:["Внешнее электроснабжение текстильной фабрики мощностью 42 МВт, г. Арысь","Xinjiang Lihua (Group) Co., Ltd."],kk:["Қуаты 42 МВт тоқыма фабрикасын сыртқы электрмен жабдықтау, Арыс қ.","Xinjiang Lihua (Group) Co., Ltd."],en:["External power supply for a 42 MW textile factory, Arys","Xinjiang Lihua (Group) Co., Ltd."]},
+{y:"2023–2024",c:"net",ru:["Реконструкция электрических сетей и оборудования Наурызбайского района, г. Алматы","ТОО «Фаворит Билдинг»"],kk:["Алматы қ. Наурызбай ауданының электр желілері мен жабдықтарын қайта жаңарту","«Фаворит Билдинг» ЖШС"],en:["Upgrade of electrical grids and equipment in Nauryzbay district, Almaty","Favorit Building LLP"]},
+{y:"2023–2025",c:"net",ru:["Инженерная инфраструктура мкр. Бозарык, г. Шымкент (электро-, водо-, газоснабжение)","ТОО «Jana KZ QURYLYS», ТОО «AKBARSSTRIYL Ltd»"],kk:["Шымкент қ. Бозарық ш/а инженерлік инфрақұрылымы (электр, су, газ)","«Jana KZ QURYLYS» ЖШС, «AKBARSSTRIYL Ltd» ЖШС"],en:["Utility infrastructure for Bozaryk district, Shymkent (power, water, gas)","Jana KZ QURYLYS LLP, AKBARSSTRIYL Ltd LLP"]},
+{y:"2023",c:"net",ru:["Реконструкция ЛЭП и оборудования с. Мугалжар, Актюбинская область","ТОО «УниверсалСтройСервис»"],kk:["Ақтөбе облысы Мұғалжар ауылының ЭБЖ мен жабдықтарын қайта жаңарту","«УниверсалСтройСервис» ЖШС"],en:["Upgrade of power lines and equipment in Mugalzhar village, Aktobe region","UniversalStroyService LLP"]},
+{y:"2021–2022",c:"net",ru:["Электрические сети 10/0,4 кВ в жилом массиве Айкол, г. Шымкент","ТОО «Жолсерік»"],kk:["Шымкент қ. Айкөл тұрғын алабындағы 10/0,4 кВ электр желілері","«Жолсерік» ЖШС"],en:["10/0.4 kV grids for Aikol residential area, Shymkent","Zholserik LLP"]},
+{y:"2020–2021",c:"sub",ru:["ПС 110/10 кВ «ИЗ» — индустриальная зона, Западно-Казахстанская область","ТОО «Azia RC»"],kk:["110/10 кВ «ИЗ» ҚС — индустриялық аймақ, Батыс Қазақстан облысы","«Azia RC» ЖШС"],en:["110/10 kV “IZ” substation — industrial zone, West Kazakhstan region","Azia RC LLP"]},
+{y:"2020–2021",c:"sub",ru:["Монтаж оборудования ПС 35/10 кВ «Актас»","ТОО «Ынтымак Бес Арыс»"],kk:["35/10 кВ «Ақтас» ҚС жабдықтарын монтаждау","«Ынтымақ Бес Арыс» ЖШС"],en:["Equipment installation at the 35/10 kV Aktas substation","Yntymak Bes Arys LLP"]},
+{y:"2020",c:"sub",ru:["ПС 35/10 кВ «Аэропорт 826» — электроснабжение международного аэропорта, Туркестанская область","ТОО «Компания Союз 21»"],kk:["35/10 кВ «Әуежай 826» ҚС — халықаралық әуежайды электрмен жабдықтау, Түркістан облысы","«Компания Союз 21» ЖШС"],en:["35/10 kV “Airport 826” substation — power supply for the international airport, Turkistan region","Soyuz 21 Company LLP"]}
+];
+
+const GAL=[["g1","w2"],["g2","h2"],["g3"],["g10"],["sub2","h2"],["g4"],["g5"],["g6","w2"],["g8"],["g9"],["g11"],["g12"],["g7","w2"],["g13","w2"]];
+const DOCS=[["c1","lic"],["c2","lic"],["c3","lic"],["c4","cert"],["c5","cert"],["c6","cert"],["c7","cert"],["c8","cert"],["c9","cert"]];
+
+let lang="ru",filt="all";
+try{const s=localStorage.getItem("hv_lang");if(T[s])lang=s}catch(e){}
+
+const yrs=new Date().getFullYear()-2008-(new Date().getMonth()<7?1:0);
+document.querySelectorAll(".yrs").forEach(e=>e.textContent=yrs);
+document.getElementById("yr").textContent=new Date().getFullYear();
+
+function renderProjects(){
+  const L=T[lang];
+  document.getElementById("plist").innerHTML=P.filter(p=>filt==="all"||(filt==="live"?p.live:p.c===filt)).map(p=>
+    `<div class="proj"><div class="yr ${p.live?'live':''}">${p.live?p.y+'<br><small>'+L.live+'</small>':p.y}</div><h3>${p[lang][0]}</h3><p>${p[lang][1]}</p></div>`).join("");
+}
+function renderDocs(){
+  const L=T[lang];
+  document.getElementById("docsgrid").innerHTML=DOCS.map((d,i)=>`<button data-lb="docs" data-k="${i}"><img src="img/${d[0]}.jpg" alt="${L[d[1]]}"><span>${L[d[1]]}</span></button>`).join("");
+}
+function setLang(l){
+  lang=l;const L=T[l];
+  document.documentElement.lang=l==="kk"?"kk":l;
+  document.title=L.title;
+  document.querySelectorAll("[data-i]").forEach(e=>{const v=L[e.dataset.i];if(v!=null)e.innerHTML=v});
+  document.querySelectorAll("[data-list]").forEach(e=>e.innerHTML=L[e.dataset.list].map(x=>`<li>${x}</li>`).join(""));
+  document.querySelectorAll(".langs button").forEach(b=>b.classList.toggle("on",b.dataset.l===l));
+  renderProjects();renderDocs();
+  try{localStorage.setItem("hv_lang",l)}catch(e){}
+}
+document.querySelectorAll(".langs button").forEach(b=>b.onclick=()=>setLang(b.dataset.l));
+document.getElementById("filters").onclick=e=>{const b=e.target.closest("button");if(!b)return;filt=b.dataset.f;
+  document.querySelectorAll("#filters button").forEach(x=>x.classList.toggle("on",x===b));renderProjects()};
+
+document.getElementById("gal").innerHTML=GAL.map((g,i)=>`<button class="${g[1]||''}" data-lb="gal" data-k="${i}"><img src="img/${g[0]}.jpg" alt="HiVolt"></button>`).join("");
+
+// menu
+const menu=document.getElementById("menu");
+document.getElementById("burger").onclick=()=>menu.classList.toggle("open");
+menu.onclick=e=>{if(e.target.tagName==="A")menu.classList.remove("open")};
+
+// copy email
+document.getElementById("copymail").onclick=async e=>{e.preventDefault();const a=e.currentTarget;
+  try{await navigator.clipboard.writeText("hivolt1606@gmail.com");a.textContent=T[lang].copied;setTimeout(()=>a.textContent=T[lang].copy,1800)}catch(_){}};
+
+// lightbox
+const lb=document.getElementById("lb"),lbimg=document.getElementById("lbimg");let set=[],idx=0;
+function show(){lbimg.src="img/"+set[idx][0]+".jpg"}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-lb]");if(!b)return;
+  set=b.dataset.lb==="gal"?GAL:DOCS;idx=+b.dataset.k;show();lb.classList.add("on")});
+lb.querySelector(".x").onclick=()=>lb.classList.remove("on");
+lb.querySelector(".pv").onclick=e=>{e.stopPropagation();idx=(idx-1+set.length)%set.length;show()};
+lb.querySelector(".nx").onclick=e=>{e.stopPropagation();idx=(idx+1)%set.length;show()};
+lb.onclick=e=>{if(e.target===lb)lb.classList.remove("on")};
+document.addEventListener("keydown",e=>{if(!lb.classList.contains("on"))return;
+  if(e.key==="Escape")lb.classList.remove("on");if(e.key==="ArrowLeft")lb.querySelector(".pv").click();if(e.key==="ArrowRight")lb.querySelector(".nx").click()});
+
+// reveal
+const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+
+setLang(lang);
+</script>
+</body>
+</html>
